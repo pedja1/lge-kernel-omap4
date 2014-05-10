@@ -847,4 +847,9 @@ config TOUCHSCREEN_CYPRESS_TTSP
 
 	  If unsure, say N.
 
+config TOUCHSCREEN_SWEEP2WAKE
+        tristate "Sweep2Wake for touchscreens"
+        default n
+
+
 endif
