@@ -294,6 +294,8 @@ obj-$(CONFIG_MACH_OMAP4_PANDA)		+= board-omap4panda.o \
 					   omap4_apps_brd_id.o \
 					   omap_phy_internal.o
 
+obj-$(CONFIG_FORCE_FAST_CHARGE)		+= fastchg.o
+
 obj-$(CONFIG_MACH_OMAP3517EVM)		+= board-am3517evm.o \
 					   omap_phy_internal.o \
 

@@ -49,6 +49,7 @@
 #include <lge/board.h>
 
 #include <linux/muic/muic_tsu5611.h>
+#include <linux/fastchg.h>
 
 static int muic_retain_mode = NO_RETAIN;
 
@@ -284,8 +285,24 @@ static void muic_set_charger_mode(struct i2c_client *client)
 			muic_i2c_write_byte(client, CONTROL_2, INT1_EN);
 			muic_set_mode(MUIC_NA_TA);
 		} else {
+			dev_info(&client->dev, "%s: test 12345 AP_USB\n", __func__);
+#ifdef CONFIG_FORCE_FAST_CHARGE
+			if(force_fast_charge != 0)
+			{
+				dev_info(&client->dev, "%s: fastcharge: TA_1A\n", __func__);
+				muic_i2c_write_byte(client, CONTROL_1, ID_200 | SEMREN);
+				muic_i2c_write_byte(client, CONTROL_2, INT1_EN);
+				muic_set_mode(MUIC_TA_1A);
+			}
+			else
+			{
+				dev_info(&client->dev, "%s: fastcharge: AP_USB\n", __func__);
+				muic_set_mode(MUIC_AP_USB);
+			}
+#else
 			dev_info(&client->dev, "%s: AP_USB\n", __func__);
 			muic_set_mode(MUIC_AP_USB);
+#endif
 		}
   	}
 }
